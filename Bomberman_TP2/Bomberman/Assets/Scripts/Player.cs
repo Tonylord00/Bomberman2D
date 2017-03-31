@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GlobalStateManager GlobalManager;
+
+
     public enum State
     {
         IDLE = 0,
@@ -11,9 +14,29 @@ public class Player : MonoBehaviour
         ROLL,
     }
 
+    [Range(1, 2)]
+    public int playerNumber = 1;
+    public float moveSpeed = 5f;
+    public bool canDropBombs = true;
+    public bool canMove = true;
+    public bool dead = false;
+
+    private int bombs = 2;
+
+    public GameObject bomPrefab;
+
+    private Rigidbody rigidBody;
+    private Transform myTransform;
+
     public Animator m_Animator;
     public SpriteRenderer m_SpriteRenderer;
 	
+    void Start()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+        myTransform = transform;
+        m_Animator = myTransform.FindChild("PlayerModel").GetComponent<Animator>();
+    }
 	// Update is called once per frame
 	void Update ()
     {
